@@ -4,7 +4,8 @@ import {Container, PostCard} from '../components'
 
 
 function Home() {
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState([]);
+     const [fetched, setFetched] = useState(false);   //it's extra can remove
 
     useEffect(() => {
         appwriteService.getPosts().then((posts) => {
