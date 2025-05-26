@@ -4,12 +4,19 @@ import appwriteService from "../appwrite/config";
 
 function AllPosts() {
     const [posts, setPosts] = useState([])
-    useEffect(() => {}, [])
-    appwriteService.getPosts([]).then((posts) => {
-        if (posts) {
-            setPosts(posts.documents)
+     const [fetched, setFetched] = useState(false)   //it's extra can remove but bandwidth will increase so fastly
+
+    useEffect(() => {
+        if (!fetched) {              // ✅ run only if not already fetched
+            appwriteService.getPosts([]).then((posts) => {
+                if (posts) {
+                    setPosts(posts.documents)
+                    setFetched(true)      // ✅ mark as fetched
+                }
+            })
         }
-    })
+    }, [fetched])           // ✅ run effect only when 'fetched' changes
+
   return (
     <div className='w-full py-8'>
         <Container>
